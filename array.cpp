@@ -5,13 +5,15 @@ void PrintArray (int data [], int size, const char title []);
 void FillArray_11 (int data [], int size);
 void FillArray_12 (int data [], int size);
 void FillArray_13 (int data [], int size);
+void FillArray_21 (int data [], int size);
+void FillArray_22 (int data [], int size);
 
 int main ()
     {
     int data [100] = {};
 
-    FillArray_13  (data, 20);
-    PrintArray (data, 20, "После заполнения");
+    FillArray_22 (data, 20);
+    PrintArray   (data, 20, "Получен массив:");
 
     $d;
 
@@ -34,8 +36,8 @@ void PrintArray (int data [], int size, const char title [])
     $y; printf ("\n%s :", title);
     for (int i = 0; i < size; i++)
         {
-        if (i % 5 == 0) printf ("\n");
-        $g; printf ("[%2d] = %3d, ", i, data [i]);
+        printf ("\n");
+        $g; printf ("[%2d] = %3d", i, data [i]);
         }
     }
 
@@ -70,5 +72,28 @@ void FillArray_13 (int data [], int size)
         if (data [i - 1] == 1) data [i] = 2;
         if (data [i - 1] == 2) data [i] = 3;
         if (data [i - 1] == 3) data [i] = 1;
+        }
+    }
+
+void FillArray_21 (int data [], int size)
+    {
+    for (int i = 0; i < size; i++)
+        {
+        assert (0 <= i     && i     < size);
+
+        if ((i % 6 == 0) || (i % 6 == 5)) data [i] = 1;
+        if ((i % 6 == 1) || (i % 6 == 4)) data [i] = 2;
+        if ((i % 6 == 2) || (i % 6 == 3)) data [i] = 3;
+        }
+    }
+
+void FillArray_22 (int data [], int size)
+    {
+    for (int i = 0; i < size; i++)
+        {
+        assert (0 <= i     && i     < size);
+
+        if (i % 6 < 3) data [i] = i % 6 + 1;
+                  else data [i] = 6 - i % 6;
         }
     }
