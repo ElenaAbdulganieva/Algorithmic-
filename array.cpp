@@ -10,12 +10,13 @@ void FillArray_22 (int data [], int size);
 void FillArray_31 (int data [], int size);
 void FillArray_41 (int data [], int size);
 void FillArray_42 (int data [], int size);
+void FillArray_51 (int data [], int size, int step);
 
 int main ()
     {
     int data [100] = {};
 
-    FillArray_42 (data, 20);
+    FillArray_51 (data, 20, 3);
     PrintArray   (data, 20, "Получен массив:");
 
     $d;
@@ -149,3 +150,21 @@ void FillArray_42 (int data [], int size)
         }
     }
 
+void FillArray_51 (int data [], int size, int step)
+    {
+    int score = 1;
+    for (int i = 0; i < size / 2; i = i + step)
+        {
+        assert (0 <= i && i < size);
+
+        if (data [i] == 0)     data [i]     = score;
+        if (data [i + 1] == 0) data [i + 1] = score + 1;
+        if (data [i + 2] == 0) data [i + 2] = score + 2;
+
+        if (data [size - i] == 0)       data [size - i]       = score + 3;
+        if (data [size - (i + 1)] == 0) data [size - (i + 1)] = score + 4;
+        if (data [size - (i + 2)] == 0) data [size - (i + 2)] = score + 5;
+
+        score = score + 6;
+        }
+    }
