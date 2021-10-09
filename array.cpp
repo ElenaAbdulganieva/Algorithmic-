@@ -7,12 +7,15 @@ void FillArray_12 (int data [], int size);
 void FillArray_13 (int data [], int size);
 void FillArray_21 (int data [], int size);
 void FillArray_22 (int data [], int size);
+void FillArray_31 (int data [], int size);
+void FillArray_41 (int data [], int size);
+void FillArray_42 (int data [], int size);
 
 int main ()
     {
     int data [100] = {};
 
-    FillArray_22 (data, 20);
+    FillArray_42 (data, 20);
     PrintArray   (data, 20, "Получен массив:");
 
     $d;
@@ -34,7 +37,7 @@ void FillArray (int data [], int size, int start, int step)
 void PrintArray (int data [], int size, const char title [])
     {
     $y; printf ("\n%s :", title);
-    for (int i = 0; i < size; i++)
+    for (int i = 0; i <= size; i++)
         {
         printf ("\n");
         $g; printf ("[%2d] = %3d", i, data [i]);
@@ -91,9 +94,58 @@ void FillArray_22 (int data [], int size)
     {
     for (int i = 0; i < size; i++)
         {
-        assert (0 <= i     && i     < size);
+        assert (0 <= i && i < size);
 
         if (i % 6 < 3) data [i] = i % 6 + 1;
                   else data [i] = 6 - i % 6;
         }
     }
+
+void FillArray_31 (int data [], int size)
+    {
+    for (int i = 0; i < size; i++)
+        {
+        assert (0 <= i && i < size);
+
+        if (i % 4 == 2) data [i] = 3;
+        if (i % 4 == 0) data [i] = 1;
+        if ((i % 4 == 1) || (i % 4 == 3)) data [i] = 2;
+        }
+    }
+
+void FillArray_41 (int data [], int size)
+    {
+    int score = 1;
+    for (int i = 0; i <= size / 2; i++)
+        {
+        assert (0 <= i && i < size);
+
+        data [i] = score;
+        score++;
+        if (data [size - i] == 0) data [size - i] = score;
+        score++;
+        }
+    }
+
+void FillArray_42 (int data [], int size)
+    {
+    int even = 2;
+    int  odd = 1;
+
+    for (int i = 0; i <= size / 2; i++)
+        {
+        assert (0 <= i && i < size);
+
+        data [i] = odd;
+        odd = odd + 2;
+        }
+
+    for (int i = 0; i <= size / 2; i++)
+        {
+        assert (0 <= i && i < size);
+
+        if (data [size - i] == 0) data [size - i] = even;
+        even = even + 2;
+        }
+    }
+
