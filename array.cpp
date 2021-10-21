@@ -13,13 +13,16 @@ void FillArray_42 (int data [], int size);
 void FillArray_51 (int data [], int size, int step);
 void FillRandomArray (int data [], int size, int minimum, int maximum);
 void MinMaxArray     (int data [], int size, boolean maximum);
+void ExchangeArray   (int data [], int size);
+void ShiftArray      (int data [], int size, boolean shiftright);
 
 int main ()
     {
     int data [20] = {};
 
     FillRandomArray (data, 20, -100, 100);
-    MinMaxArray (data, 20, 1);
+    PrintArray   (data, 20, "Array");
+    ShiftArray (data, 20, 0);
     PrintArray   (data, 20, "Array");
 
     $d;
@@ -41,7 +44,7 @@ void FillArray (int data [], int size, int start, int step)
 void PrintArray (int data [], int size, const char title [])
     {
     $y; printf ("\n%s :", title);
-    for (int i = 0; i <= size; i++)
+    for (int i = 0; i < size; i++)
         {
         printf ("\n");
         $g; printf ("[%2d] = %3d", i, data [i]);
@@ -172,7 +175,7 @@ void FillArray_51 (int data [], int size, int step)
         }
     }
 
-void FillRandomArray  (int data [], int size, int minimum, int maximum)
+void FillRandomArray (int data [], int size, int minimum, int maximum)
     {
     for (int i = 0; i <= size; i ++)
         {
@@ -181,16 +184,16 @@ void FillRandomArray  (int data [], int size, int minimum, int maximum)
         }
     }
 
-void MinMaxArray  (int data [], int size, boolean maximum)
+void MinMaxArray (int data [], int size, boolean maximum)
     {
     int max = data [0];
     int min = data [0];
     int number_min = 0;
     int number_max = 0;
 
-    for (int i = 1; i <= size; i ++)
+    for (int i = 1; i < size; i ++)
         {
-        assert (0 <= i && i <= size);
+        assert (0 <= i && i < size);
         if (max < data [i])
             {
             number_max = i;
@@ -205,4 +208,46 @@ void MinMaxArray  (int data [], int size, boolean maximum)
 
     if (maximum == 1) printf ("number_max = %d", number_max);
                  else printf ("number_min = %d", number_min);
+    }
+
+void ExchangeArray (int data [], int size)
+    {
+    int glass = 0;
+
+    for (int i = 0; i < size; i += 2)
+        {
+        assert (0 <= i && i < size);
+        glass = data [i];
+        data [i] = data [i + 1];
+        data [i + 1] = glass;
+        }
+    }
+
+void ShiftArray (int data [], int size, boolean shiftright)
+    {
+    if (shiftright == 1)
+        {
+        int glass = data [size - 1];
+
+        for (int i = size - 1; i >= 0; i = i - 1)
+            {
+            assert (0 <= i && i < size);
+            data [i] = data [i - 1];
+            }
+
+        data [0] = glass;
+        }
+
+    if (shiftright == 0)
+        {
+        int glass = data [0];
+
+        for (int i = 0; i < size - 2; i++)
+            {
+            assert (0 <= i && i < size);
+            data [i] = data [i + 1];
+            }
+
+        data [size - 1] = glass;
+        }
     }
