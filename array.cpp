@@ -11,13 +11,16 @@ void FillArray_31 (int data [], int size);
 void FillArray_41 (int data [], int size);
 void FillArray_42 (int data [], int size);
 void FillArray_51 (int data [], int size, int step);
+void FillRandomArray (int data [], int size, int minimum, int maximum);
+void MinMaxArray     (int data [], int size, boolean maximum);
 
 int main ()
     {
-    int data [100] = {};
+    int data [20] = {};
 
-    FillArray_51 (data, 20, 3);
-    PrintArray   (data, 20, "Получен массив:");
+    FillRandomArray (data, 20, -100, 100);
+    MinMaxArray (data, 20, 1);
+    PrintArray   (data, 20, "Array");
 
     $d;
 
@@ -108,8 +111,8 @@ void FillArray_31 (int data [], int size)
         {
         assert (0 <= i && i < size);
 
-        if (i % 4 == 2) data [i] = 3;
-        if (i % 4 == 0) data [i] = 1;
+        if  (i % 4 == 2) data [i] = 3;
+        if  (i % 4 == 0) data [i] = 1;
         if ((i % 4 == 1) || (i % 4 == 3)) data [i] = 2;
         }
     }
@@ -157,14 +160,49 @@ void FillArray_51 (int data [], int size, int step)
         {
         assert (0 <= i && i < size);
 
-        if (data [i] == 0)     data [i]     = score;
+        if (data [i]     == 0) data [i]     = score;
         if (data [i + 1] == 0) data [i + 1] = score + 1;
         if (data [i + 2] == 0) data [i + 2] = score + 2;
 
-        if (data [size - i] == 0)       data [size - i]       = score + 3;
+        if (data [size - i]       == 0) data [size - i]       = score + 3;
         if (data [size - (i + 1)] == 0) data [size - (i + 1)] = score + 4;
         if (data [size - (i + 2)] == 0) data [size - (i + 2)] = score + 5;
 
         score = score + 6;
         }
+    }
+
+void FillRandomArray  (int data [], int size, int minimum, int maximum)
+    {
+    for (int i = 0; i <= size; i ++)
+        {
+        assert (0 <= i && i <= size);
+        data [i] = rand () % (maximum + 1) - rand () % (minimum + 1);
+        }
+    }
+
+void MinMaxArray  (int data [], int size, boolean maximum)
+    {
+    int max = data [0];
+    int min = data [0];
+    int number_min = 0;
+    int number_max = 0;
+
+    for (int i = 1; i <= size; i ++)
+        {
+        assert (0 <= i && i <= size);
+        if (max < data [i])
+            {
+            number_max = i;
+            max = data [i];
+            }
+        if (min > data [i])
+            {
+            number_min = i;
+            min = data [i];
+            }
+        }
+
+    if (maximum == 1) printf ("number_max = %d", number_max);
+                 else printf ("number_min = %d", number_min);
     }
