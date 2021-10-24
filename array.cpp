@@ -14,16 +14,24 @@ void FillArray_51 (int data [], int size, int step);
 void FillRandomArray (int data [], int size, int minimum, int maximum);
 void MinMaxArray     (int data [], int size, boolean maximum);
 void ExchangeArray   (int data [], int size);
-void ShiftArray      (int data [], int size, boolean shiftright);
+void ShiftArray      (int data [], int size, boolean shiftright, int start, int endd);
+void ShiftBlockArray (int data [], int size, int number);
 
 int main ()
     {
-    int data [20] = {};
+    int data [22] = {};
 
-    FillRandomArray (data, 20, -100, 100);
-    PrintArray   (data, 20, "Array");
-    ShiftArray (data, 20, 0);
-    PrintArray   (data, 20, "Array");
+    //FillRandomArray (data, 22, -100, 100);
+    for (int i = 0; i < 22; i++)
+        {
+        assert (0 <= i && i < 22);
+        data [i] = i + 1;
+        }
+
+    //PrintArray (data, 22, "Array");
+    ShiftArray (data, 20, 0, 3, 6);
+    ShiftBlockArray (data, 22, 5);
+    PrintArray (data, 22, "Array");
 
     $d;
 
@@ -217,37 +225,65 @@ void ExchangeArray (int data [], int size)
     for (int i = 0; i < size; i += 2)
         {
         assert (0 <= i && i < size);
-        glass = data [i];
-        data [i] = data [i + 1];
+        glass        = data [i];
+        data [i]     = data [i + 1];
         data [i + 1] = glass;
         }
     }
 
-void ShiftArray (int data [], int size, boolean shiftright)
+void ShiftArray (int data [], int size, boolean shiftright, int start, int endd)
     {
     if (shiftright == 1)
         {
-        int glass = data [size - 1];
+        int glass = data [endd];
 
-        for (int i = size - 1; i >= 0; i = i - 1)
+        for (int i = endd; i >= start; i = i - 1)
             {
             assert (0 <= i && i < size);
             data [i] = data [i - 1];
             }
 
-        data [0] = glass;
+        data [start] = glass;
         }
 
     if (shiftright == 0)
         {
-        int glass = data [0];
+        int glass = data [start];
 
-        for (int i = 0; i < size - 2; i++)
+        for (int i = start; i < endd; i++)
             {
             assert (0 <= i && i < size);
             data [i] = data [i + 1];
             }
 
-        data [size - 1] = glass;
+        data [endd] = glass;
+        }
+    }
+
+void ShiftBlockArray (int data [], int size, int number)
+    {
+    int glass    = 0;
+    int position = 0;
+
+    while (position + 2 * number < size - 1)
+        {
+        for (int i = position; i < position + number; i ++)
+            {
+            assert (0 <= i && i < size);
+            assert (0 <= position + number && position + number < size);
+            glass             = data [i];
+            data [i]          = data [i + number];
+            data [i + number] = glass;
+            }
+
+        position = position + number;
+        printf ("\n");
+        $y; printf("%d ", position);
+        }
+
+    for (int i = 1; i < size - position - 1; i ++)
+        {
+        assert (0 <= i && i < size);
+        ShiftArray (data, size, 0, position, size - 1);
         }
     }
