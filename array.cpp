@@ -11,27 +11,20 @@ void FillArray_31 (int data [], int size);
 void FillArray_41 (int data [], int size);
 void FillArray_42 (int data [], int size);
 void FillArray_51 (int data [], int size, int step);
-void FillRandomArray (int data [], int size, int minimum, int maximum);
-void MinMaxArray     (int data [], int size, boolean maximum);
-void ExchangeArray   (int data [], int size);
-void ShiftArray      (int data [], int size, boolean shiftright, int start, int endd);
-void ShiftBlockArray (int data [], int size, int number);
+void FillRandomArray    (int data [], int size, int minimum, int maximum);
+int  MinMaxArray        (int data [], int size, boolean maximum, int start, int end);
+void ExchangeArray      (int data [], int size);
+void ShiftArray         (int data [], int size, boolean shiftright, int start, int endd);
+void ShiftBlockArray    (int data [], int size, int number);
+void SortSelectionArray (int data [], int size, int start, int end);
 
 int main ()
     {
-    int data [22] = {};
+    int data [10] = {};
 
-    //FillRandomArray (data, 22, -100, 100);
-    for (int i = 0; i < 22; i++)
-        {
-        assert (0 <= i && i < 22);
-        data [i] = i + 1;
-        }
-
-    //PrintArray (data, 22, "Array");
-    ShiftArray (data, 20, 0, 3, 6);
-    ShiftBlockArray (data, 22, 5);
-    PrintArray (data, 22, "Array");
+    FillRandomArray (data, 10, -20, 20);
+    PrintArray (data, 10, "Array");
+    SortSelectionArray (data, 10, 0, 10);
 
     $d;
 
@@ -52,11 +45,12 @@ void FillArray (int data [], int size, int start, int step)
 void PrintArray (int data [], int size, const char title [])
     {
     $y; printf ("\n%s :", title);
+    printf ("\n");
     for (int i = 0; i < size; i++)
         {
-        printf ("\n");
-        $g; printf ("[%2d] = %3d", i, data [i]);
+        $g; printf ("[%2d ]=%3d  ", i, data [i]);
         }
+    printf ("\n");
     }
 
 void FillArray_11 (int data [], int size)
@@ -192,14 +186,14 @@ void FillRandomArray (int data [], int size, int minimum, int maximum)
         }
     }
 
-void MinMaxArray (int data [], int size, boolean maximum)
+int MinMaxArray (int data [], int size, boolean maximum, int start, int end)
     {
-    int max = data [0];
-    int min = data [0];
-    int number_min = 0;
-    int number_max = 0;
+    int max = data [start];
+    int min = data [start];
+    int number_min = start;
+    int number_max = start;
 
-    for (int i = 1; i < size; i ++)
+    for (int i = start + 1; i < end; i ++)
         {
         assert (0 <= i && i < size);
         if (max < data [i])
@@ -214,8 +208,8 @@ void MinMaxArray (int data [], int size, boolean maximum)
             }
         }
 
-    if (maximum == 1) printf ("number_max = %d", number_max);
-                 else printf ("number_min = %d", number_min);
+    if (maximum == 1) return number_max;
+                 else return number_min;
     }
 
 void ExchangeArray (int data [], int size)
@@ -285,5 +279,24 @@ void ShiftBlockArray (int data [], int size, int number)
         {
         assert (0 <= i && i < size);
         ShiftArray (data, size, 0, position, size - 1);
+        }
+    }
+
+void SortSelectionArray (int data [], int size, int start, int end)
+    {
+    int begin = start;
+
+    for (begin = start; begin < end; begin ++)
+        {
+        int glass = data [begin];
+        int number = MinMaxArray (data, size, 0, begin, end);
+        data [begin] = data [number];
+        data [number] = glass;
+        for (int i = start; i < size; i ++)
+            {
+            if (i <= begin) {$g; printf ("[%2d ]=%3d  ", i, data [i]);}
+                       else {$y; printf ("[%2d ]=%3d  ", i, data [i]);}
+            }
+        printf ("\n");
         }
     }
