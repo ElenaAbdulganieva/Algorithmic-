@@ -17,14 +17,22 @@ void ExchangeArray      (int data [], int size);
 void ShiftArray         (int data [], int size, boolean shiftright, int start, int endd);
 void ShiftBlockArray    (int data [], int size, int number);
 void SortSelectionArray (int data [], int size, int start, int end);
+void BubbleSortArray    (int data [], int size, int start, int end);
 
 int main ()
     {
-    int data [10] = {};
+    int data [30] = {};
 
-    FillRandomArray (data, 10, -20, 20);
-    PrintArray (data, 10, "Array");
-    SortSelectionArray (data, 10, 0, 10);
+    FillRandomArray (data, 30, -10, 10);
+    //PrintArray (data, 20, "Array before");
+    BubbleSortArray (data, 30, 0, 4);
+    BubbleSortArray (data, 30, 0, 9);
+    BubbleSortArray (data, 30, 0, 14);
+    BubbleSortArray (data, 30, 0, 19);
+    BubbleSortArray (data, 30, 0, 24);
+    BubbleSortArray (data, 30, 0, 29);
+
+    //PrintArray (data, 30, "Array after");
 
     $d;
 
@@ -48,7 +56,7 @@ void PrintArray (int data [], int size, const char title [])
     printf ("\n");
     for (int i = 0; i < size; i++)
         {
-        $g; printf ("[%2d ]=%3d  ", i, data [i]);
+        $b; printf ("[%2d ]=%3d  ", i, data [i]);
         }
     printf ("\n");
     }
@@ -285,18 +293,44 @@ void ShiftBlockArray (int data [], int size, int number)
 void SortSelectionArray (int data [], int size, int start, int end)
     {
     int begin = start;
+    int comparison = 0;
+    int exchange   = 0;
 
     for (begin = start; begin < end; begin ++)
         {
         int glass = data [begin];
         int number = MinMaxArray (data, size, 0, begin, end);
+        comparison ++;
         data [begin] = data [number];
         data [number] = glass;
-        for (int i = start; i < size; i ++)
-            {
-            if (i <= begin) {$g; printf ("[%2d ]=%3d  ", i, data [i]);}
-                       else {$y; printf ("[%2d ]=%3d  ", i, data [i]);}
-            }
-        printf ("\n");
+        exchange ++;
         }
+
+    $y; printf ("\n");
+    printf ("comparison = %d exchange = %d", comparison, exchange);
+    }
+
+void BubbleSortArray    (int data [], int size, int start, int end)
+    {
+    int glass      = 0;
+    int comparison = 0;
+    int exchange   = 0;
+
+    for (int sort = 1; sort < end - start - 1; sort ++)
+        {
+        for (int i = start; i < end; i ++)
+            {
+            comparison ++;
+            if (data [i] > data [i + 1])
+                {
+                glass = data [i];
+                data [i] =data [i + 1];
+                data [i + 1] = glass;
+                exchange ++;
+                }
+            }
+        }
+
+    $y; printf ("\n");
+    printf ("comparison = %d exchange = %d", comparison, exchange);
     }
