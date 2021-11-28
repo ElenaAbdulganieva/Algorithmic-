@@ -43,6 +43,7 @@ void PrintArray (int data [], int size, const char title [])
     printf ("\n");
     for (int i = 0; i < size; i++)
         {
+        assert (0 <= i && i < size);
         $b; printf ("[%2d ]=%3d  ", i, data [i]);
         }
     printf ("\n");
@@ -94,6 +95,7 @@ ComExc SortSelectionArray (int data [], int size, int start, int end)
 
     for (begin = start; begin < end; begin ++)
         {
+        assert (0 <= begin && begin < size);
         int glass = data [begin];
         int number = MinMaxArray (data, size, 0, begin, end, &comexc);
         data [begin] = data [number];
@@ -120,6 +122,7 @@ ComExc BubbleSortArray (int data [], int size, int start, int end)
         {
         for (int i = start; i < end; i ++)
             {
+            assert (0 <= i && i < size);
             comexc.comparison ++;
             if (data [i] > data [i + 1])
                 {
