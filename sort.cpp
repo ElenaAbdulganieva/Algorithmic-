@@ -1,5 +1,6 @@
 # include "TXlib.h"
 # include "stdio.h"
+# include "config.h"
 
 struct ComExc
     {
@@ -8,12 +9,24 @@ struct ComExc
     };
 
 void FillRandomArray (int data [], int size, int minimum, int maximum);
-void PrintArray (int data [], int size, const char title []);
+void PrintArray      (int data [], int size, const char title []);
+void Counting  ();
+void DrawCharts ();
 int MinMaxArray (int data [], int size, boolean maximum, int start, int end, ComExc* comexc);
 ComExc SortSelectionArray (int data [], int size, int start, int end);
-ComExc BubbleSortArray (int data [], int size, int start, int end);
+ComExc BubbleSortArray    (int data [], int size, int start, int end);
 
+//-----------------------------------------------------------------------------
 int main ()
+    {
+    txCreateWindow (WINDOW_WIDTH, WINDOW_HEIGHT);
+    Counting ();
+    DrawCharts ();
+    return 0;
+    }
+
+//-----------------------------------------------------------------------------
+void Counting ()
     {
     int i = 0;
     int data [100] = {};
@@ -22,8 +35,8 @@ int main ()
     for (int i = 0; i < 101; i +=5)
         {
         SortSelectionArray (data, 100, 0, i);
+        BubbleSortArray    (data, 100, 0, i);
         }
-    return 0;
     }
 
 //-----------------------------------------------------------------------------
@@ -81,7 +94,6 @@ int MinMaxArray (int data [], int size, boolean maximum, int start, int end, Com
                  else return number_min;
     }
 
-
 //-----------------------------------------------------------------------------
 ComExc SortSelectionArray (int data [], int size, int start, int end)
     {
@@ -89,7 +101,7 @@ ComExc SortSelectionArray (int data [], int size, int start, int end)
     comexc.comparison = 0;
     comexc.exchange = 0;
 
-    FILE *res = fopen ("results_SortSelect.csv", "a");
+    FILE *res = fopen ("results/results_SortSelect.csv", "w");
 
     int begin = start;
 
@@ -107,7 +119,6 @@ ComExc SortSelectionArray (int data [], int size, int start, int end)
     fclose (res);
     }
 
-
 //-----------------------------------------------------------------------------
 ComExc BubbleSortArray (int data [], int size, int start, int end)
     {
@@ -116,7 +127,7 @@ ComExc BubbleSortArray (int data [], int size, int start, int end)
     comexc.exchange = 0;
     int glass = 0;
 
-    FILE *res = fopen ("results_bubbleSort.csv", "a");
+    FILE *res = fopen ("results/results_bubbleSort.csv", "w");
 
     for (int sort = 1; sort < end - start - 1; sort ++)
         {
@@ -137,4 +148,27 @@ ComExc BubbleSortArray (int data [], int size, int start, int end)
     fprintf(res, "%d; %d\n", comexc.exchange, comexc.comparison);
     fclose (res);
     }
+
+//-----------------------------------------------------------------------------
+void DrawCharts ()
+    {
+    HDC fon = txLoadImage ("image/fon.bmp");
+    txBitBlt (txDC (), 0, 0, 0, 0, fon, 0, 0);
+    int t = 1;
+
+    FILE *res1 = fopen ("results/results_SortSelect.csv", "a");
+    FILE *res2 = fopen ("results/results_bubbleSort.csv", "a");
+
+    while (! txGetAsyncKeyState (VK_ESCAPE))
+        {
+        txSleep (1);
+        t ++;
+        }
+
+    fclose (res1);
+    fclose (res2);
+    txDeleteDC (fon);
+    }
+
+//-----------------------------------------------------------------------------
 
