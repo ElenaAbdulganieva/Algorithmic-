@@ -10,9 +10,12 @@ struct ComExc
 
 void FillRandomArray (int data [], int size, int minimum, int maximum);
 void PrintArray      (int data [], int size, const char title []);
-void Counting  ();
+void Counting   ();
 void DrawCharts ();
+
 int MinMaxArray (int data [], int size, boolean maximum, int start, int end, ComExc* comexc);
+
+ComExc DrawChart (int x, int y, const char namefile[]);
 ComExc SortSelectionArray (int data [], int size, int start, int end);
 ComExc BubbleSortArray    (int data [], int size, int start, int end);
 
@@ -156,19 +159,27 @@ void DrawCharts ()
     txBitBlt (txDC (), 0, 0, 0, 0, fon, 0, 0);
     int t = 1;
 
-    FILE *res1 = fopen ("results/results_SortSelect.csv", "a");
-    FILE *res2 = fopen ("results/results_bubbleSort.csv", "a");
-
     while (! txGetAsyncKeyState (VK_ESCAPE))
         {
         txSleep (1);
         t ++;
         }
 
-    fclose (res1);
-    fclose (res2);
+    DrawChart (100, 100, "results/results_bubbleSort.csv");
+
     txDeleteDC (fon);
     }
 
 //-----------------------------------------------------------------------------
+ComExc DrawChart (int x, int y, const char namefile[])
+    {
+    FILE *res = fopen (namefile, "r");
 
+    ComExc comexc;
+    comexc.comparison = 0;
+    comexc.exchange = 0;
+
+    fscanf (res, "%d", comexc.comparison);
+
+    fclose (res);
+    }
