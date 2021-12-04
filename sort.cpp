@@ -104,7 +104,7 @@ ComExc SortSelectionArray (int data [], int size, int start, int end)
     comexc.comparison = 0;
     comexc.exchange = 0;
 
-    FILE *res = fopen ("results/results_SortSelect.csv", "w");
+    FILE *res = fopen ("results/results_SortSelect.csv", "a");
 
     int begin = start;
 
@@ -118,7 +118,7 @@ ComExc SortSelectionArray (int data [], int size, int start, int end)
         comexc.exchange += 4;
         }
 
-    fprintf(res, "%d; %d\n", comexc.exchange, comexc.comparison);
+    fprintf (res, "%d; %d\n", comexc.exchange, comexc.comparison);
     fclose (res);
     }
 
@@ -130,7 +130,7 @@ ComExc BubbleSortArray (int data [], int size, int start, int end)
     comexc.exchange = 0;
     int glass = 0;
 
-    FILE *res = fopen ("results/results_bubbleSort.csv", "w");
+    FILE *res = fopen ("results/results_bubbleSort.csv", "a");
 
     for (int sort = 1; sort < end - start - 1; sort ++)
         {
@@ -148,7 +148,7 @@ ComExc BubbleSortArray (int data [], int size, int start, int end)
             }
         }
 
-    fprintf(res, "%d; %d\n", comexc.exchange, comexc.comparison);
+    fprintf (res, "%d; %d\n", comexc.exchange, comexc.comparison);
     fclose (res);
     }
 
@@ -159,13 +159,13 @@ void DrawCharts ()
     txBitBlt (txDC (), 0, 0, 0, 0, fon, 0, 0);
     int t = 1;
 
+    DrawChart (100, 550, "results/results_bubbleSort.csv");
+
     while (! txGetAsyncKeyState (VK_ESCAPE))
         {
         txSleep (1);
         t ++;
         }
-
-    DrawChart (100, 100, "results/results_bubbleSort.csv");
 
     txDeleteDC (fon);
     }
@@ -179,7 +179,18 @@ ComExc DrawChart (int x, int y, const char namefile[])
     comexc.comparison = 0;
     comexc.exchange = 0;
 
-    fscanf (res, "%d", comexc.comparison);
+    txSetColor (RGB (122, 84, 33), 3);
+    txLine     (x, y, x + 350, y      );
+    txLine     (x, y, x,       y - 500);
+
+    for (int i = 1; i < 21; i += 17)
+        {
+        fprintf (res, "%d",   comexc.exchange  );
+        fprintf (res, "%d\n", comexc.comparison);
+
+        printf ("%d ",  comexc.exchange  );
+        printf ("%d\n", comexc.comparison);
+        }
 
     fclose (res);
     }
