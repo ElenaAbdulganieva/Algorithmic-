@@ -160,8 +160,9 @@ void DrawCharts ()
     int t = 1;
 
     DrawChart (100, 550, "results/results_bubbleSort.csv");
+    DrawChart (800, 550, "results/results_SortSelect.csv");
 
-    while (! txGetAsyncKeyState (VK_ESCAPE))
+    while (!txGetAsyncKeyState (VK_ESCAPE))
         {
         txSleep (1);
         t ++;
@@ -173,24 +174,15 @@ void DrawCharts ()
 //-----------------------------------------------------------------------------
 ComExc DrawChart (int x, int y, const char namefile[])
     {
-    FILE *res = fopen (namefile, "r");
-
     ComExc comexc;
     comexc.comparison = 0;
-    comexc.exchange = 0;
+    comexc.exchange   = 0;
 
     txSetColor (RGB (122, 84, 33), 3);
     txLine     (x, y, x + 350, y      );
     txLine     (x, y, x,       y - 500);
 
-    for (int i = 1; i < 21; i += 17)
-        {
-        fprintf (res, "%d",   comexc.exchange  );
-        fprintf (res, "%d\n", comexc.comparison);
-
-        printf ("%d ",  comexc.exchange  );
-        printf ("%d\n", comexc.comparison);
-        }
+    FILE *res = fopen (namefile, "a");
 
     fclose (res);
     }
